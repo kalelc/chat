@@ -7,12 +7,18 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"time"
+	"os"
+	"github.com/gorilla/sessions"
 )
 
 type User struct {
 	Name string
 	Time string
 }
+
+var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
+
+const SessionName = "LoginSession"
 
 func Login(w http.ResponseWriter, r *http.Request) {
 	templates := template.Must(template.ParseFiles("templates/login.html"))
@@ -23,16 +29,40 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func LoginPost(w http.ResponseWriter, r *http.Request) {
+
+	session, err := store.Get(r, SessionName)
+
+	if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+
+	session.Values["name"] = r.FormValue("name")
+	session.Values["datetime"] = time.Now().Format(time.Stamp)
+	session.Save(r, w)
+
 	http.Redirect(w, r, "/chat", http.StatusSeeOther)
 }
 
 func Chat(w http.ResponseWriter, r *http.Request) {
 	templates := template.Must(template.ParseFiles("templates/chat.html"))
 
-	user := User{"AN", time.Now().Format(time.Stamp)}
-	err := templates.ExecuteTemplate(w, "chat.html", user)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	session, err := store.Get(r, SessionName)
+
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+
+
+	if name, ok := session.Values["name"].(string); ok {
+		datetime := session.Values["datetime"].(string)
+		user := User{name, datetime}
+		if err := templates.ExecuteTemplate(w, "chat.html", user); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+	} else {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 }
 
