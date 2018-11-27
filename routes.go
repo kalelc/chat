@@ -41,7 +41,7 @@ var routes = Routes{
 		"login",
 		"/login",
 		"POST",
-		LoginPost,
+		Login,
 	},
 	Route{
 		"chat",
@@ -50,4 +50,3 @@ var routes = Routes{
 		Chat,
 	},
 }
-
