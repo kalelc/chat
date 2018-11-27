@@ -64,24 +64,3 @@ func Chat(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 }
-
-func logRequest(req *http.Request) {
-	dump, err := httputil.DumpRequest(req, true)
-	if err != nil {
-		return
-	}
-
-	log.Printf("%s", dump)
-}
-
-func jsonBody(req *http.Request) (map[string]interface{}, error) {
-	decoder := json.NewDecoder(req.Body)
-
-	mapper := make(map[string]interface{})
-	err := decoder.Decode(&mapper)
-
-	if err != nil {
-		log.Println(err)
-	}
-	return mapper, err
-}
