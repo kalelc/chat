@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 type Route struct {
@@ -38,7 +39,7 @@ var routes = Routes{
 		Login,
 	},
 	Route{
-		"login",
+		"validate-login",
 		"/login",
 		"POST",
 		Login,
@@ -48,5 +49,11 @@ var routes = Routes{
 		"/chat",
 		"GET",
 		Chat,
+	},
+	Route{
+		"process-message",
+		"/chat/process-message",
+		"GET",
+		ProcessMessage,
 	},
 }

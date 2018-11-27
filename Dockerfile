@@ -11,6 +11,7 @@ ENV SESSION_KEY $SESSION_KEY
 
 RUN go get -d github.com/gorilla/mux
 RUN go get -d github.com/gorilla/sessions
+RUN go get -d github.com/gorilla/websocket
 
 RUN go build -o main .
 

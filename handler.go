@@ -1,11 +1,13 @@
 package main
 
 import (
-	"github.com/gorilla/sessions"
 	"html/template"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/gorilla/sessions"
+	"github.com/gorilla/websocket"
 )
 
 type User struct {
@@ -13,9 +15,18 @@ type User struct {
 	Time string
 }
 
+// Session Configuration
+
 var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
 
 const SessionName = "LoginSession"
+
+// websocket configuration
+
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+}
 
 func Login(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
