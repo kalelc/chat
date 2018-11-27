@@ -7,9 +7,9 @@
   </head>
   <body>
     <div class="welcome center">
-      <form method="POST">
-        <label>Nombre:</label><br />
-        <input type="text" name="email"><br />
+      <form action="/login" method="post">
+        <label>nombre: {{.Name}}</label><br />
+        <input type="text" name="name"><br />
         <input type="submit">
       </form>
     </div>

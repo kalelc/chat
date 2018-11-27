@@ -37,4 +37,10 @@ var routes = Routes {
 		"GET",
 		Login,
 	},
+	Route {
+		"login",
+		"/login",
+		"POST",
+		LoginPost,
+	},
 }

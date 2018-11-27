@@ -15,13 +15,25 @@ type User struct {
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	user := User{"Anonymous", time.Now().Format(time.Stamp)}
 	templates := template.Must(template.ParseFiles("templates/login.html"))
 
-	if name := r.FormValue("name"); name != "" {
+	if err := templates.ExecuteTemplate(w, "login.html", nil); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func LoginPost(w http.ResponseWriter, r *http.Request) {
+	templates := template.Must(template.ParseFiles("templates/login.html"))
+
+	name := r.FormValue("name")
+	user := User{name, time.Now().Format(time.Stamp)}
+
+	if name != "" {
 		user.Name = name
 	}
-	if err := templates.ExecuteTemplate(w, "login.html", user); err != nil {
+
+	err := templates.ExecuteTemplate(w, "login.html", user)
+	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
