@@ -23,16 +23,14 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func LoginPost(w http.ResponseWriter, r *http.Request) {
-	templates := template.Must(template.ParseFiles("templates/login.html"))
+	http.Redirect(w, r, "/chat", http.StatusSeeOther)
+}
 
-	name := r.FormValue("name")
-	user := User{name, time.Now().Format(time.Stamp)}
+func Chat(w http.ResponseWriter, r *http.Request) {
+	templates := template.Must(template.ParseFiles("templates/chat.html"))
 
-	if name != "" {
-		user.Name = name
-	}
-
-	err := templates.ExecuteTemplate(w, "login.html", user)
+	user := User{"AN", time.Now().Format(time.Stamp)}
+	err := templates.ExecuteTemplate(w, "chat.html", user)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}

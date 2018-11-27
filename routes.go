@@ -43,4 +43,11 @@ var routes = Routes{
 		"POST",
 		LoginPost,
 	},
+	Route{
+		"chat",
+		"/chat",
+		"GET",
+		Chat,
+	},
 }
+

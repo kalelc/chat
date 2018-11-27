@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/stylesheets/basic.css">
+    <title>Chat</title>
+  </head>
+  <body>
+    <div>
+      <form action="/login" method="post">
+        <label>{{.Name}}</label><br />
+        <textarea rows="4" cols="50"></textarea>
+        <br>
+        <input type='text' name='message'><input type="submit">
+      </form>
+    </div>
+  </body>
+</html>
