@@ -1,8 +1,8 @@
 package main
 
 import (
-	"net/http"
 	"github.com/gorilla/mux"
+	"net/http"
 )
 
 type Route struct {
@@ -30,14 +30,14 @@ func NewRouter() *mux.Router {
 	return router
 }
 
-var routes = Routes {
-	Route {
+var routes = Routes{
+	Route{
 		"login",
 		"/",
 		"GET",
 		Login,
 	},
-	Route {
+	Route{
 		"login",
 		"/login",
 		"POST",

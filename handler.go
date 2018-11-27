@@ -2,11 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"html/template"
 	"log"
 	"net/http"
 	"net/http/httputil"
 	"time"
-	"html/template"
 )
 
 type User struct {
