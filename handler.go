@@ -1,12 +1,9 @@
 package main
 
 import (
-	"encoding/json"
 	"github.com/gorilla/sessions"
 	"html/template"
-	"log"
 	"net/http"
-	"net/http/httputil"
 	"os"
 	"time"
 )
